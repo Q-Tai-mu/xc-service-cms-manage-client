@@ -6,12 +6,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 /**
  * @author wuangjing
  * @create 2020/11/5-9:44
- * @Description: queue_cms_postpage/ex_routing_cms_postpage
- * queue_cms_postpage_name
- * ex_routing_key
+ * @Description: 申明交换机和队列 消费方要同时保证交换机和队列的存在
  */
 @Configuration
 public class RabbitConfig {
