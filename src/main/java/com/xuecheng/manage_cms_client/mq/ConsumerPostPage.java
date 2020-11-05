@@ -2,6 +2,8 @@ package com.xuecheng.manage_cms_client.mq;
 
 import com.alibaba.fastjson.JSON;
 import com.xuecheng.framework.domain.cms.CmsPage;
+import com.xuecheng.framework.exception.ExceptionCast;
+import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.manage_cms_client.dao.CmsPageRepository;
 import com.xuecheng.manage_cms_client.service.PageService;
 import org.slf4j.Logger;
@@ -34,20 +36,25 @@ public class ConsumerPostPage {
      */
     @RabbitListener(queues = {"${xuecheng.mq.queue}"})
     public void postPage(String message) {
-        //解析消息
-        Map map = JSON.parseObject(message, Map.class);
-        //打印日志
-        LOGGER.info("receive cms post page:{}", message.toString());
-        //取出页面id
-        String pageId = (String) map.get("pageId");
-        //查询页面信息
-        Optional<CmsPage> optional = cmsPageRepository.findById(pageId);
-        //判断是否存在相关页面
-        if (!optional.isPresent()) {
-            LOGGER.error("receive cms page,cmsPage is null:{}", message.toString());
-            return;
+        try {
+            //解析消息
+            Map map = JSON.parseObject(message, Map.class);
+            //打印日志
+            LOGGER.info("receive cms post page:{}", message.toString());
+            //取出页面id
+            String pageId = (String) map.get("pageId");
+            //查询页面信息
+            Optional<CmsPage> optional = cmsPageRepository.findById(pageId);
+            //判断是否存在相关页面
+            if (!optional.isPresent()) {
+                LOGGER.error("receive cms page,cmsPage is null:{}", message.toString());
+                return;
+            }
+            //将页面保存到服务器物理路径
+            pageService.savePageToServerPath(pageId);
+        } catch (Exception e) {
+            ExceptionCast.cast(CommonCode.INCORRECT_DATA_TYPE);
+
         }
-        //将页面保存到服务器物理路径
-        pageService.savePageToServerPath(pageId);
     }
 }
