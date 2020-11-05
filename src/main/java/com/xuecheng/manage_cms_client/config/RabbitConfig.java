@@ -35,7 +35,7 @@ public class RabbitConfig {
     //配置交换机 durable持久化交换机
     @Bean(EX_ROUTING_CMS_POSTPAGE)
     public Exchange EX_ROUTING_CMS_POSTPAGE() {
-        return ExchangeBuilder.topicExchange(EX_ROUTING_CMS_POSTPAGE).durable(true).build();
+        return ExchangeBuilder.directExchange(EX_ROUTING_CMS_POSTPAGE).durable(true).build();
     }
 
     //配置交换机和队列绑定

@@ -57,7 +57,7 @@ public class PageService {
         //得到页面所属站点
         CmsSite cmsSite = this.getCmsSiteById(cmsPage.getSiteId());
         //页面物理路径 ：站点路径+页面路径+页面名称
-        String pagePath = cmsSite.getPagePhysicalPath() + cmsPage.getPagePhysicalPath() + cmsPage.getPageName();
+        String pagePath = cmsSite.getSitePhysicalPath() + cmsPage.getPagePhysicalPath() + cmsPage.getPageName();
         //查询页面静态文件
         String htmlFileId = cmsPage.getHtmlFileId();
         //得到文件的输入流
