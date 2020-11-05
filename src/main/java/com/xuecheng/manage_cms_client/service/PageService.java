@@ -100,7 +100,7 @@ public class PageService {
             GridFSFile gridFSFile = gridFsTemplate.findOne(Query.query(Criteria.where("_id").is(htmlFileId)));
             //打开GridFS下载对象
             GridFSDownloadStream fsDownloadStream = gridFSBucket.openDownloadStream(gridFSFile.getObjectId());
-            //下载GridFS中得文件源对象 参数1：文件属性，参数2：GridFs下载对象
+            //下载GridFS中得文件源对象 参数1：文件属性，参数2：GridFs下载对象 锁定了MongoDB GridFS 具体文件源对象
             GridFsResource gridFsResource = new GridFsResource(gridFSFile, fsDownloadStream);
             //返回GridFS文件源 对象的InputStream
             return gridFsResource.getInputStream();
