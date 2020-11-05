@@ -26,7 +26,7 @@ public class RunnerTest {
     @Test
     public void test1() {
         String age="xing";
-        String ams="11";
+        String ams="114322";
         String message="hello world i m form spring boot factory";
         template.convertAndSend(RabbitConfig.EX_ROUTING_CMS_POSTPAGE,"5a751fab6abb5044e0d19ea1",message);
     }
